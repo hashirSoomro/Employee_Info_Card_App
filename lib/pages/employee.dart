@@ -14,6 +14,7 @@ class _EmployeeState extends State<Employee> {
   TextEditingController nameController = TextEditingController();
   TextEditingController ageController = TextEditingController();
   TextEditingController locationController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,106 +34,133 @@ class _EmployeeState extends State<Employee> {
           ),
         ]),
       ),
-      body: Container(
-        margin: EdgeInsets.only(left: 20, top: 30, right: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Name",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-              padding: EdgeInsets.only(left: 10),
-              decoration: BoxDecoration(
-                  border: Border.all(),
-                  borderRadius: BorderRadius.circular(10)),
-              child: TextField(
-                controller: nameController,
-                decoration: InputDecoration(border: InputBorder.none),
+      body: SingleChildScrollView(
+        child: Container(
+          margin: EdgeInsets.only(left: 20, top: 30, right: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Name",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold),
               ),
-            ),
-            SizedBox(height: 20),
-            Text(
-              "Age",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-              padding: EdgeInsets.only(left: 10),
-              decoration: BoxDecoration(
-                  border: Border.all(),
-                  borderRadius: BorderRadius.circular(10)),
-              child: TextField(
-                controller: ageController,
-                decoration: InputDecoration(border: InputBorder.none),
+              SizedBox(
+                height: 10,
               ),
-            ),
-            SizedBox(height: 20),
-            Text(
-              "Location",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-              padding: EdgeInsets.only(left: 10),
-              decoration: BoxDecoration(
-                  border: Border.all(),
-                  borderRadius: BorderRadius.circular(10)),
-              child: TextField(
-                controller: locationController,
-                decoration: InputDecoration(border: InputBorder.none),
+              Container(
+                padding: EdgeInsets.only(left: 10),
+                decoration: BoxDecoration(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(10)),
+                child: TextField(
+                  controller: nameController,
+                  decoration: InputDecoration(border: InputBorder.none),
+                ),
               ),
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            Center(
-              child: ElevatedButton(
-                  onPressed: () async {
-                    String Id = randomAlphaNumeric(10);
-                    Map<String, dynamic> employeeInfoMap = {
-                      "Name": nameController.text,
-                      "Age": ageController.text,
-                      "Id": Id,
-                      "Location": locationController.text
-                    };
-                    await DatabaseMethods()
-                        .addEmployeeDetails(employeeInfoMap, Id)
-                        .then((value) => {
-                              Fluttertoast.showToast(
-                                  msg:
-                                      "Employee detail has been added Successfully.",
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.CENTER,
-                                  timeInSecForIosWeb: 1,
-                                  backgroundColor: Colors.red,
-                                  textColor: Colors.white,
-                                  fontSize: 16.0)
-                            });
-                  },
-                  child: Text(
-                    "Add",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  )),
-            )
-          ],
+              SizedBox(height: 20),
+              Text(
+                "Age",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                padding: EdgeInsets.only(left: 10),
+                decoration: BoxDecoration(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(10)),
+                child: TextField(
+                  controller: ageController,
+                  decoration: InputDecoration(border: InputBorder.none),
+                ),
+              ),
+              SizedBox(height: 20),
+              Text(
+                "Location",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                padding: EdgeInsets.only(left: 10),
+                decoration: BoxDecoration(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(10)),
+                child: TextField(
+                  controller: locationController,
+                  decoration: InputDecoration(border: InputBorder.none),
+                ),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Text(
+                "Phone Number:",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                padding: EdgeInsets.only(left: 10),
+                decoration: BoxDecoration(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(10)),
+                child: TextField(
+                  controller: phoneController,
+                  decoration: InputDecoration(border: InputBorder.none),
+                ),
+              ),
+              SizedBox(
+                height: 40,
+              ),
+              Center(
+                child: ElevatedButton(
+                    onPressed: () async {
+                      String Id = randomAlphaNumeric(10);
+                      Map<String, dynamic> employeeInfoMap = {
+                        "Name": nameController.text,
+                        "Age": ageController.text,
+                        "Id": Id,
+                        "Location": locationController.text,
+                        "Phone": phoneController.text
+                      };
+                      await DatabaseMethods()
+                          .addEmployeeDetails(employeeInfoMap, Id)
+                          .then((value) => {
+                                Fluttertoast.showToast(
+                                    msg:
+                                        "Employee detail has been added Successfully.",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.CENTER,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.red,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0)
+                              });
+                    },
+                    child: Text(
+                      "Add",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    )),
+              )
+            ],
+          ),
         ),
       ),
     );

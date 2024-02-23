@@ -14,6 +14,7 @@ class _HomeState extends State<Home> {
   TextEditingController nameController = TextEditingController();
   TextEditingController ageController = TextEditingController();
   TextEditingController locationController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
   Stream? EmployeeStream;
 
   getontheload() async {
@@ -66,6 +67,7 @@ class _HomeState extends State<Home> {
                                         ageController.text = ds["Age"];
                                         locationController.text =
                                             ds["Location"];
+                                        phoneController.text = ds["Phone"];
                                         EditEmployeeDetail(ds["Id"]);
                                       },
                                       child: Icon(
@@ -102,6 +104,13 @@ class _HomeState extends State<Home> {
                                     color: Colors.blue,
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                "Phone: " + ds["Phone"],
+                                style: TextStyle(
+                                    color: Colors.orange,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
                               )
                             ],
                           ),
@@ -126,12 +135,12 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           Text(
-            "Flutter",
+            "Employee",
             style: TextStyle(
                 color: Colors.blue, fontSize: 24, fontWeight: FontWeight.bold),
           ),
           Text(
-            "Firebase",
+            "InfoCards",
             style: TextStyle(
                 color: Colors.orange,
                 fontSize: 24,
@@ -153,125 +162,151 @@ class _HomeState extends State<Home> {
   Future EditEmployeeDetail(String id) => showDialog(
       context: context,
       builder: (context) => AlertDialog(
-            content: Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Icon(
-                            Icons.cancel,
-                            color: Colors.blue,
-                            size: 25,
-                          )),
-                      SizedBox(
-                        width: 60,
-                      ),
-                      Text(
-                        "Edit",
-                        style: TextStyle(
-                            color: Colors.blue,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        "Details",
-                        style: TextStyle(
-                            color: Colors.orange,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Text(
-                    "Name",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(left: 10),
-                    decoration: BoxDecoration(
-                        border: Border.all(),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: TextField(
-                      controller: nameController,
-                      decoration: InputDecoration(border: InputBorder.none),
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    "Age",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(left: 10),
-                    decoration: BoxDecoration(
-                        border: Border.all(),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: TextField(
-                      controller: ageController,
-                      decoration: InputDecoration(border: InputBorder.none),
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    "Location",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(left: 10),
-                    decoration: BoxDecoration(
-                        border: Border.all(),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: TextField(
-                      controller: locationController,
-                      decoration: InputDecoration(border: InputBorder.none),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Center(
-                      child: ElevatedButton(
-                          onPressed: () async {
-                            Map<String, dynamic> updateInfo = {
-                              "Name": nameController.text,
-                              "Age": ageController.text,
-                              "Id": id,
-                              "Location": locationController.text
-                            };
-                            await DatabaseMethods()
-                                .updateEmployeeDetail(id, updateInfo)
-                                .then((value) {
+            content: SingleChildScrollView(
+              child: Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        GestureDetector(
+                            onTap: () {
                               Navigator.pop(context);
-                            });
-                          },
-                          child: Text("Update")))
-                ],
+                            },
+                            child: Icon(
+                              Icons.cancel,
+                              color: Colors.blue,
+                              size: 25,
+                            )),
+                        SizedBox(
+                          width: 60,
+                        ),
+                        Text(
+                          "Edit",
+                          style: TextStyle(
+                              color: Colors.blue,
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          "Details",
+                          style: TextStyle(
+                              color: Colors.orange,
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Text(
+                      "Name",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(left: 10),
+                      decoration: BoxDecoration(
+                          border: Border.all(),
+                          borderRadius: BorderRadius.circular(10)),
+                      child: TextField(
+                        controller: nameController,
+                        decoration: InputDecoration(border: InputBorder.none),
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      "Age",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(left: 10),
+                      decoration: BoxDecoration(
+                          border: Border.all(),
+                          borderRadius: BorderRadius.circular(10)),
+                      child: TextField(
+                        controller: ageController,
+                        decoration: InputDecoration(border: InputBorder.none),
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      "Location",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(left: 10),
+                      decoration: BoxDecoration(
+                          border: Border.all(),
+                          borderRadius: BorderRadius.circular(10)),
+                      child: TextField(
+                        controller: locationController,
+                        decoration: InputDecoration(border: InputBorder.none),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      "Phone Number",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(left: 10),
+                      decoration: BoxDecoration(
+                          border: Border.all(),
+                          borderRadius: BorderRadius.circular(10)),
+                      child: TextField(
+                        controller: phoneController,
+                        decoration: InputDecoration(border: InputBorder.none),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Center(
+                        child: ElevatedButton(
+                            onPressed: () async {
+                              Map<String, dynamic> updateInfo = {
+                                "Name": nameController.text,
+                                "Age": ageController.text,
+                                "Id": id,
+                                "Location": locationController.text,
+                                "Phone": phoneController.text
+                              };
+                              await DatabaseMethods()
+                                  .updateEmployeeDetail(id, updateInfo)
+                                  .then((value) {
+                                Navigator.pop(context);
+                              });
+                            },
+                            child: Text("Update")))
+                  ],
+                ),
               ),
             ),
           ));

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "102269603951",
+    "project_id": "basicapp-f1540",
+    "storage_bucket": "basicapp-f1540.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:102269603951:android:93d2cd37aa299c9b923d9a",
+        "android_client_info": {
+          "package_name": "com.example.employee_info_card"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAaOmyZkX8w5S_d6IDPL54B1rd0BDQ22p0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

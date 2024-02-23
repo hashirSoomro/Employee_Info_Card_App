@@ -51,8 +51,6 @@ class _HomeState extends State<Home> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     "Name: " + ds["Name"],
@@ -61,6 +59,7 @@ class _HomeState extends State<Home> {
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold),
                                   ),
+                                  Spacer(),
                                   GestureDetector(
                                       onTap: () {
                                         nameController.text = ds["Name"];
@@ -69,8 +68,25 @@ class _HomeState extends State<Home> {
                                             ds["Location"];
                                         EditEmployeeDetail(ds["Id"]);
                                       },
-                                      child: Icon(Icons.edit,
-                                          color: Colors.orange))
+                                      child: Icon(
+                                        Icons.edit,
+                                        color: Colors.orange,
+                                        size: 25,
+                                      )),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  GestureDetector(
+                                    onTap: () async {
+                                      await DatabaseMethods()
+                                          .deleteEmployeeDetail(ds["Id"]);
+                                    },
+                                    child: Icon(
+                                      Icons.delete,
+                                      color: Colors.orange,
+                                      size: 25,
+                                    ),
+                                  ),
                                 ],
                               ),
                               Text(
@@ -147,7 +163,11 @@ class _HomeState extends State<Home> {
                           onTap: () {
                             Navigator.pop(context);
                           },
-                          child: Icon(Icons.cancel)),
+                          child: Icon(
+                            Icons.cancel,
+                            color: Colors.blue,
+                            size: 25,
+                          )),
                       SizedBox(
                         width: 60,
                       ),
@@ -168,17 +188,17 @@ class _HomeState extends State<Home> {
                     ],
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 30,
                   ),
                   Text(
                     "Name",
                     style: TextStyle(
                         color: Colors.black,
-                        fontSize: 24,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
                   Container(
                     padding: EdgeInsets.only(left: 10),
@@ -195,11 +215,11 @@ class _HomeState extends State<Home> {
                     "Age",
                     style: TextStyle(
                         color: Colors.black,
-                        fontSize: 24,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
                   Container(
                     padding: EdgeInsets.only(left: 10),
@@ -216,11 +236,11 @@ class _HomeState extends State<Home> {
                     "Location",
                     style: TextStyle(
                         color: Colors.black,
-                        fontSize: 24,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
                   Container(
                     padding: EdgeInsets.only(left: 10),
